@@ -1,0 +1,47 @@
+version: '3'
+volumes:
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  production_caddy: {}
+  static_data:
+
+services:
+  django: 
+    build:
+      context: .
+      dockerfile: ./base/compose/production/django/Dockerfile
+    image: base_production_django
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    volumes:
+      - static_data:/vol/web
+    command: /start
+    
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: ./base/compose/production/nginx/Dockerfile
+    volumes:
+      - static_data:/vol/static
+    ports: 
+      - "8080:8080"
+    depends_on:
+      - django
+
+  db:
+    build:
+      context: .
+      dockerfile: ./base/compose/dev/postgres/Dockerfile
+    image: base_production_postgres
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.production/.postgres
+    ports:
+      - "5434:5432"
