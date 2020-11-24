@@ -8,6 +8,15 @@ you can use pokemon_fetch commando to retrieve information related to a pokemon 
 
 `docker-compose -f compose-dev.yml run --rm django sh -c 'python manage.py pokemon_fetch {id}'`
 
+# Pokemon Endpoint
+
+You can retrieve local pokemon information using the following endpoints
+
+http://localhost:8000/api/v1/pokemon/
+
+You can also you can filter by pokemon name
+
+http://localhost:8000/api/v1/pokemon/?search={pokemon_name}
 
 ## Local Server commands (DEV)
 
