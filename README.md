@@ -2,6 +2,13 @@
 
 This service allows to use a command to fetch information from pokemon API, that information is persisted on a database and can be retrive using and endpoint and filtering by name.
 
+## Pokemon fetch Commando
+
+you can use pokemon_fetch commando to retrieve information related to a pokemon chain-evolution, id must be an integer.
+
+`docker-compose -f compose-dev.yml run --rm django sh -c 'python manage.py pokemon_fetch {id}'`
+
+
 ## Local Server commands (DEV)
 
 **Adding Docker-compose File**
